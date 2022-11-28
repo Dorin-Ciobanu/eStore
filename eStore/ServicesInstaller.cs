@@ -1,5 +1,7 @@
 ﻿using eStore.Services.Basket;
+using eStore.Services.Calculators;
 using eStore.Services.Campaigns.ComboCampaign;
+using eStore.Services.Campaigns.VolumeCampaign;
 using eStore.Services.DialogueProviders.ChooseProducts;
 using eStore.Services.DialogueProviders.Greeting;
 using eStore.Services.ProductInputExtractor;
@@ -16,8 +18,10 @@ internal class ServicesInstaller
         serviceCollection.AddSingleton<IChooseProductsDialogueProvider, ChooseProductsDialogueProvider>();
         serviceCollection.AddSingleton<IGreetingDialogueProvider, GreetingDialogueProvider>();
         serviceCollection.AddSingleton<IProductService, ProductService>();
-        serviceCollection.AddSingleton<IProductInputExtractor, ProductInputExtractor>();
+        serviceCollection.AddSingleton<IInputProductExtractor, ProductInputExtractor>();
         serviceCollection.AddSingleton<IComboCampaign, ComboCampaign>();
+        serviceCollection.AddSingleton<IVolumeCampaign, VolumeCampaign>();
+        serviceCollection.AddSingleton<ICheckoutPriceCalculator, CheckoutPriceCalculator>();
         serviceCollection.AddMemoryCache();
     }
 }

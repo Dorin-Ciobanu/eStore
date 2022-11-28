@@ -2,7 +2,7 @@
 using eStore.Services.ProductServices;
 
 namespace eStore.Services.ProductInputExtractor;
-public class ProductInputExtractor : IProductInputExtractor
+public class ProductInputExtractor : IInputProductExtractor
 {
     private readonly IProductService _productService;
 
@@ -15,20 +15,14 @@ public class ProductInputExtractor : IProductInputExtractor
     {
         var basketProducts = new List<ProductBase>();
 
-        var cachedAvailableProductsDictionary = _productService.GetCachedAvailableProductsDictionary();
+        var availableProducts = _productService.GetAvailableProducts();
 
-        var inputProducts = input.Split(',');
+        var inputProducts = input.Split(',').GroupBy(i => i);
 
-        for(int i = 0; i < inputProducts.Length; i++)
+        //for now I assume that there are enough products available
+        foreach(var group in inputProducts)
         {
-            if(cachedAvailableProductsDictionary.TryGetValue(int.Parse(inputProducts[i]), out ProductBase value))
-            {
-                basketProducts.Add(value);
-            }
-            else
-            {
-                throw new Exception($"Cache error of {nameof(cachedAvailableProductsDictionary)} at {nameof(ProductInputExtractor)}.");
-            }
+            basketProducts.AddRange(availableProducts.Where(p => p.ProductCategoryId == int.Parse(group.Key)).Take(group.Count()));
         }
 
         return basketProducts;
