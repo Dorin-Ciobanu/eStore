@@ -17,13 +17,19 @@ namespace eStore.Services.DialogueProviders.Greeting
         {
             Console.Clear();
 
-            Console.WriteLine($"Welcome! You have now entered the eStore. We have some great campaigns running at the moment.{Environment.NewLine}Would you like to see them? Type in Y for \"Yes\" or N for \"No\":");
+            Console.WriteLine($"Welcome! You have now entered the eStore. We have some great campaigns running at the moment.{Environment.NewLine}Would you like to learn more about them? Type in Y for \"Yes\" or N for \"No\":");
 
             var answer = EnsureValidAnswer(Console.ReadLine());
 
             if (answer.Equals(ValidAnswerYes))
             {
-                Console.WriteLine($"{Environment.NewLine}Answered: Yes");
+                Console.WriteLine($"{Environment.NewLine}Coming soon...");
+                Thread.Sleep(1500);
+
+                Console.WriteLine($"{Environment.NewLine}But you can still browse the shop.");
+                Thread.Sleep(2000);
+
+                _chooseProductsDialogueProvider.StartDialogue();
             }
             else if (answer.Equals(ValidAnswerNo))
             {

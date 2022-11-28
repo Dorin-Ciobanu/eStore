@@ -1,48 +1,30 @@
-﻿using eStore.Models.Product;
-
+﻿
 namespace eStore.Services.Campaigns.ComboCampaign;
 public class ComboCampaign : IComboCampaign
 {
-    private readonly HashSet<int> _campaignProducts;
+    private readonly HashSet<int> _campaignProductCategories;
     private readonly int _comboQuantity;
     private readonly decimal _comboPrice;
 
+    public HashSet<int> CampaignProductCategories => _campaignProductCategories;
+    public int ComboQuantity => _comboQuantity;
+    public decimal ComboPrice => _comboPrice;
 
     public ComboCampaign()
     {
-        _campaignProducts = new HashSet<int>() { 1, 3, 5 };
+        _campaignProductCategories = new HashSet<int>() { 1, 3, 5 };
         _comboQuantity = 2;
         _comboPrice = 30;
     }
 
-    public decimal CalculateBasketPrice(IEnumerable<ProductBase> products)
+    public void AddCampaignProducts()
     {
-        var productsList = products.ToList();
+        throw new NotImplementedException(nameof(AddCampaignProducts));
+    }
 
-        var comboProducts = new List<ProductBase>();
-
-        for (int i = productsList.Count - 1; i >= 0; i--)
-        {
-            if(_campaignProducts.Contains(productsList[i].Id))
-            {
-                comboProducts.Add(productsList[i]);
-                productsList.RemoveAt(i);
-            }
-        }
-
-        if (comboProducts.Count % _comboQuantity != 0)
-        {
-            productsList.Add(comboProducts.Last());
-            comboProducts = comboProducts.Skip(1).ToList();
-        }
-
-        int validCombos = comboProducts.Count / _comboQuantity;
-
-        var ordinaryProductsPriceSum = productsList.Sum(p => p.Price);
-
-        var comboProductsPriceSum = validCombos * _comboPrice;
-
-        return ordinaryProductsPriceSum + comboProductsPriceSum;
+    public void UpdateCampaignProduct()
+    {
+        throw new NotImplementedException(nameof(UpdateCampaignProduct));
     }
 }
 
